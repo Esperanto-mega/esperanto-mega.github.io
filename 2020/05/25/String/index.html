@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/WebIcon.png"/>
+	<link rel="shortcut icon" href="/img/WebIcon.png">
+	
+			    <title>
+    MegaBlog
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    <meta name="keywords" content="Machine Learning" />
+    
+    	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	 
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+    <style type="text/css">
+        body:before {
+          content: ' ';
+          position: fixed;
+          top: 0;
+          background: url('/img/bg.jpg') center 0 no-repeat;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-size: cover; 
+        }
+    </style>
+
+			    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script async type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_twilight.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">MegaBlog</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">HomeScreen.</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">Categories.</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/Python/">Python</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/about/" title="Resume">
+		                Resume
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44246009" title="CSDN">
+		                CSDN
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/gallery/" title="Gallery">
+		                Gallery
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a target="_blank" rel="noopener" href="https://github.com/miccall/hexo-theme-Mic_Theme.git" title="AboutThemes">
+		                AboutThemes
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+                    
+                    <li>
+                        <a title="github" href="https://github.com/Esperanto-mega" target="_blank" rel="noopener">
+                            <i class="icon fa fa-github"></i>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a title="500px" href="http://500px.com" target="_blank" rel="noopener">
+                            <i class="icon fa fa-500px"></i>
+                        </a>
+                    </li>
+                    
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://img-blog.csdnimg.cn/20201006122324725.png);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >【Python】String字符串</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <ul>
+<li><a href="#string-python--">String-Python概述</a></li>
+<li><a href="#string---">String的创建</a></li>
+<li><a href="#string--------">String的切片操作[ ]</a></li>
+<li><a href="#string------">String的合并与分隔</a></li>
+<li><a href="#string---">String的检索</a></li>
+<li><a href="#string-----">String内容的替换</a></li>
+<li><a href="#string------">String统计子串个数</a></li>
+<li><a href="#--string">杂谈String</a></li>
+</ul>
+<p><small><i><a target="_blank" rel="noopener" href='http://ecotrust-canada.github.io/markdown-toc/'>Thanks for markdown-toc Table of contents generation.</a></i></small></p>
+<h1 id="String-Python概述"><a href="#String-Python概述" class="headerlink" title="String-Python概述"></a>String-Python概述</h1><p>不同于C++、Java等语言，Python中没有字符类型，即单字符例如<code>&#39;a&#39;</code>.所以<code>&#39;a&#39;</code>在Python中也是作为字符串来表示的。Python中的数据类型可以分类如下:</p>
+<ul>
+<li>Number—数字类型<ul>
+<li>int—整型</li>
+<li>float—浮点型</li>
+<li>complex—复数型</li>
+<li>bool—布尔型</li>
+</ul>
+</li>
+<li>String—字符串类型</li>
+<li>List—列表类型</li>
+<li>Tuple—元组类型</li>
+<li>Dictionary—字典类型</li>
+<li>Set—集合类型</li>
+</ul>
+<p>其中数字类型和C++、Java中的类型大同小异，Python亮眼的就是后面五种类型。这五种数据类型可以统称为组合数据类型，组合数据类型能够将多个同类型或不同类型的数据组织起来并统一表示，因此得名。我们可以将组合数据类型再分类:①序列类型，当中包括String、List和Tuple；②映射类型—Dictionary；③集合类型—Set.<br>序列类型可以理解为一个元素向量，当中的元素是有序的，可以通过C语言数组那样的[ ]索引方式访问元素，元素之间也不存在互异性——可以存在相同的元素。我们可以简单地理解为Python中的数组类型。序列类型统一地支持一些运算，例如成员关系运算符(in)，长度计算函数(len())，切片操作([ ]).注意，序列类型中的元素本身，也可以是序列类型，即序列是可以嵌套的。<br>映射类型Dictionary，顾名思义是表示一种映射关系——键(key)与值(value)。字典可以认为是一个集合Set，集合当中的元素是键值对(key,value).既然是集合，字典就拥有集合的特性：无序性、确定性、互异性。<br>集合类型Set，也就是离散数学中定义的集合。</p>
+<h1 id="String的创建"><a href="#String的创建" class="headerlink" title="String的创建"></a>String的创建</h1><p>创建String类型的变量很简单，单引号<code>&#39;&#39;</code>、双引号<code>&quot;&quot;</code>以及三引号<code>&quot;&quot;&quot; &quot;&quot;&quot;</code>或者<code>&#39;&#39;&#39; &#39;&#39;&#39;</code>(三个单引号或者三个双引号)都可以完成创建。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str1=<span class="string">&#x27;abcd&#x27;</span> <span class="comment">#单引号表示的字符串中不能出现单引号</span></span><br><span class="line">str2=<span class="string">&quot;dcba&quot;</span> <span class="comment">#双引号表示的字符串中不能出现双引号</span></span><br><span class="line">str3=<span class="string">&quot;&quot;&quot;ABCD&quot;&quot;&quot;</span></span><br><span class="line">print(<span class="string">&quot;%s\n%s\n%s&quot;</span>%(str1,str2,str3))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/2020052518303179.png" alt="上述代码运行结果"></p>
+<h1 id="String的切片操作"><a href="#String的切片操作" class="headerlink" title="String的切片操作[ ]"></a>String的切片操作[ ]</h1><p>[m:n:k]表示的意思是从m到n(第n号字符不包括)以步长为k进行切片操作。其中m默认为0，n默认为len(str)，k作为可选参数默认步长为1，即依次选取。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;abcdefg&quot;</span></span><br><span class="line">print(str[:])</span><br><span class="line">print(str[<span class="number">1</span>:])</span><br><span class="line">print(str[<span class="number">2</span>:<span class="number">4</span>])</span><br><span class="line">print(str[:<span class="number">5</span>:<span class="number">2</span>])</span><br><span class="line">print(str[::<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200525183537163.png" alt="上述代码运行结果"><br>值得注意的是最后一个<code>print()</code>语句，-1为步长完成了str的逆序。再次强调String是不可变类型，切片操作并不会改变String本身。不仅是切片操作，对于String的各种操作都不会改变它的字符串内容。这涉及到Python的可变对象和不可变对象。我们看下面一组代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">7</span></span><br><span class="line">b=a</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(id(<span class="number">7</span>))</span><br><span class="line">print(id(a))</span><br><span class="line">print(id(b))</span><br><span class="line">a=a+<span class="number">1</span></span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(id(<span class="number">8</span>))</span><br><span class="line">print(id(a))</span><br><span class="line">print(id(b))</span><br></pre></td></tr></table></figure>
+
+<p>id()函数可以返回一个唯一的对象标识符，也就是说如果id(a)≠id(b)，就意味着a和b不是同一个对象。<br><img src="https://img-blog.csdnimg.cn/20200525184534722.png" alt="上述代码运行结果"><br>不难发现，再执行a=a+1之前，a、b以及常数7的id是相同的，也就是说它们是同一个对象。a和b引用了常数7的值，我们可以认为a和b是7的别名，通过别名可以访问到“本尊”。接下来执行a=a+1<br>a的值变为8，相应的id(a)也不再等于id(b).此时的id(a)=id(8)，也就意味中a引用的“本尊”是8，而b依旧引用7.我们可以认为7和8一直就在内存中保留中，因为在程序中无论何时输出id(7)，都是相同的值，它不会因为a、b的存在与否而改变。这样的7—int型对象，是不可变对象。同样的道理，String也是这样的不可变对象。我们看下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(id(<span class="string">&quot;abc&quot;</span>))</span><br><span class="line">print(id(<span class="string">&quot;abcd&quot;</span>))</span><br><span class="line">str=<span class="string">&quot;abc&quot;</span></span><br><span class="line">print(id(str))</span><br><span class="line">str=<span class="string">&quot;abcd&quot;</span></span><br><span class="line">print(id(str))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525191738913.png" alt="在这里插入图片描述"><br>结果也证实了我们的看法.“abc”有它的id,”abcd”有它的id，str只是作为一个别名，引用了不同的String变量而已。而无论str引用哪一个变量，“abc”还是“abcd”，String变量本身并没有被改变。也就是说<code>str=“abcd”</code>这一语句对于String变量“abc”没有任何影响。作为对比，我们再看可变对象中很典型的List对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">print(List1)</span><br><span class="line">print(id(List1))</span><br><span class="line">List1[<span class="number">0</span>]=<span class="number">99</span></span><br><span class="line">print(List1)</span><br><span class="line">print(id(List1))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525192259826.png" alt="在这里插入图片描述"><br>可以看到List1当中的内容发生了变化——[1,2,3,4]变为了[99,2,3,4]，但它的id并没有发生变化。这和上面例子中的str以及a的行为有很大不同。</p>
+<h1 id="String的合并与分隔"><a href="#String的合并与分隔" class="headerlink" title="String的合并与分隔"></a>String的合并与分隔</h1><p>join(seq)方法用于合并字符串。我们需要注意调用join()方法的对象是需要添加进去的字符，join()方法中的参数seq才是被添加的客体。例如我们有str=“12345”，想要在每个数字之间添加连词符-<br>那么调用方法应该如下<code>&#39;-&#39;.join(str)</code>，也就是说添加行为的主体字符串对象是’-‘，它才是调用者。需要注意的是join()方法返回值是依旧是String，这也很合理，但需要和下面提到的split()方法区分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&#x27;12345&#x27;</span></span><br><span class="line">print(<span class="string">&#x27;-&#x27;</span>.join(str))</span><br><span class="line">print(str)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525193020459.png" alt="在这里插入图片描述"><br>这段程序也印证了我们上面提到的String作为不可变对象的特点，join操作并没有改变str。<br>split(str=””,num=string.count(str))是以参数str为分隔符，将调用split()方法的字符串分割开来，分割的次数由num参数指定，默认是进行最大分割。split()方法的返回值是一个以字符串为元素的列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;123456&quot;</span></span><br><span class="line">str=<span class="string">&#x27;*&#x27;</span>.join(str)</span><br><span class="line">print(str)</span><br><span class="line">list=str.split(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">print(list)</span><br><span class="line">print(type(list[<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525193937324.png" alt="在这里插入图片描述"><br>这段代码的运行结果验证了我们的上面对于split()的说明。</p>
+<h1 id="String的检索"><a href="#String的检索" class="headerlink" title="String的检索"></a>String的检索</h1><p>对于在字符串中查找子串的问题大家都不陌生，KMP算法、Horspool算法以及Boyer-Moore算法都是讨论这个问题。在Python中，find()和index()两个函数可以很便捷地完成这一操作。这两者的区别仅仅在于查找不成功时，也就是文本text中并没有模式串pattern的部分。find()方法会返回-1作为结果，而index()方法则会报出异常ValueError:substring not found.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;I am Kevin Durant,and you know who I am.&quot;</span> </span><br><span class="line">print(str.find(<span class="string">&quot;Durant&quot;</span>)) </span><br><span class="line">print(str.index(<span class="string">&quot;Durant&quot;</span>))</span><br><span class="line">print(str.find(<span class="string">&quot;KD&quot;</span>))</span><br><span class="line"><span class="comment">#print(str.index(&quot;KD&quot;))</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525194628246.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDI0NjAwOQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="String内容的替换"><a href="#String内容的替换" class="headerlink" title="String内容的替换"></a>String内容的替换</h1><p>Java中的String对象有着很方便的replace功能，这样的替换功能在Python中也存在。replace()方法可以完成字符串的替换操作，replace(old,new,max)，old和new顾名思义是替换操作的新旧字符，max作为可选参数，给出了替换进行的最大次数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;Anything I do,I spend a lot of time.&quot;</span></span><br><span class="line">print(id(str))</span><br><span class="line">print(str.replace(<span class="string">&quot;I&quot;</span>,<span class="string">&quot;you&quot;</span>))</span><br><span class="line">print(str)</span><br><span class="line">print(id(str))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525195413658.png" alt="在这里插入图片描述"><br>这里对于id(str)的解释不再赘述。</p>
+<h1 id="String统计子串个数"><a href="#String统计子串个数" class="headerlink" title="String统计子串个数"></a>String统计子串个数</h1><p>这一操作和String中进行模式匹配有着密切联系，如果在进行模式匹配的同时，不是选择第一匹配就返回索引而是继续匹配下去，并且记录匹配到的个数，就可以得到这一模式串pattern在文本text中的出现次数。Python提供了count(str,beg=0,end=len(string))函数来完成子串计数功能。其中str是模式串，string是文本，beg和end作为可选参数给出了查找的范围，注意查找范围是[beg，end)的左闭右开区间，千万不可理解为[beg，end].当end=len(string)时，string[end]已经属于越界访问。这一问题在Python中和在C/C++、Java等等几乎所有语言中都同样重要！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;123123123&quot;</span></span><br><span class="line">print(str.count(<span class="string">&#x27;1&#x27;</span>))</span><br><span class="line">print(str.count(<span class="string">&#x27;1&#x27;</span>,<span class="number">2</span>,<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200525200016937.png" alt="在这里插入图片描述"></p>
+<h1 id="杂谈String"><a href="#杂谈String" class="headerlink" title="杂谈String"></a>杂谈String</h1><ol>
+<li>String的对齐方式</li>
+<li>String的大小写转换方法</li>
+<li>String的title()、capitalize()方法</li>
+<li>String的类别判断方法</li>
+<li>String的前、后缀判断方法</li>
+<li>String的删除头尾字符方法</li>
+</ol>
+<p>首先对于String的对齐方式，Python提供三种函数来设置——rjust()、ljust()和center()。不难理解这些函数都是什么功能。这三个函数都有两个参数：width和fillchar。前者用于给出长度，后者用于实际字符串长度不足时进行填充。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;String&quot;</span></span><br><span class="line">print(str.rjust(<span class="number">20</span>,<span class="string">&quot;+&quot;</span>))</span><br><span class="line">print(str.ljust(<span class="number">20</span>,<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line">print(str.center(<span class="number">20</span>,<span class="string">&quot;=&quot;</span>))</span><br><span class="line">print(str)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525200604547.png" alt="在这里插入图片描述"><br>大写字母在ASCII码中从65-90，小写字母从97-122.对于Unicode编码中的UTF-8而言，英文字母并没有不同。Python中lower()和upper()用于转换大小写。<br>String中有一些比较特殊的方法，例如title()和capitalize()，前者作用是将字符串“标题化”，通俗的说：每个单词的首字母大写，其余小写；而后者只是将整个字符串的首字母大写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&#x27;databases system concepts&#x27;</span></span><br><span class="line">print(str.title())</span><br><span class="line">print(str.capitalize())</span><br><span class="line">print(str)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200525201300941.png" alt="在这里插入图片描述"><br>String的类别判断方法用于判断该字符串是否为一类特殊的字符串，例如isupper()判断是否全为大写字母(针对那些可以大写的字母而言)。类似的islower()、isalpha()判断是否全为字母、isdigit()判断是否全为数字、isalum()是前两个的结合，它用于判断是否由数字、字母组成。isspace()判断是否只包含空白，istitle()判断是否是“标题化”的。<br>String的前、后缀检测由endwith()以及startwith()完成。我们以endwith(suffix,beg=0,end=len(str))为例，该方法检测字符串str是否以suffix结尾，beg和end作为可选参数给出检查的指定范围。<br>我们在处理字符串时，有时候会需要删去字符串头尾的某些字符。strip()、rstrip()和lstrip()可以完成这一操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;aabbbaa&quot;</span></span><br><span class="line">print(str.strip(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line">print(str.rstrip(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line">print(str.lstrip(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line">print(str)</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200525202121453.png" alt="在这里插入图片描述"></p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://example.com/2020/05/25/String/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2020/05/25/String/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a target="_blank" rel="noopener" href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+                <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
