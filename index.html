@@ -7,6 +7,63 @@
 
 <title>Jun Yin - Homepage</title>
 
+<style>
+  :root {
+    --background-color: white;
+    --text-color: black;
+  }
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  body.night-mode {
+    --background-color: #121212;
+    --text-color: #f5f5f5; /* 柔和的白色 */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-weight: 500; /* 增加字体粗细 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); /* 增强文字清晰度 */
+  }
+  body.night-mode::selection {
+    background-color: #333333;
+    color: #ffffff;
+  }
+
+  /* body.night-mode {
+    --background-color: #121212;
+    --text-color: #ffffff;
+  } */
+  
+  #theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #121212;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  /* 按钮在不同模式下的样式 */
+  #theme-toggle.night-mode {
+    background-color: white;
+    color: black;
+  }
+  #theme-toggle.day-mode {
+    background-color: black;
+    color: white;
+  }
+  #theme-toggle:hover {
+    opacity: 0.8;
+  }
+</style>
+
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Jun Yin">
 <meta property="og:title" content="Jun Yin">
@@ -34,7 +91,7 @@
 <head>
   <base target="_blank">
 </head>
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/cat_icon.jpg">
 <link rel="icon" type="image/png" sizes="16x16" href="images/cat_icon.jpg">
 <link rel="manifest" href="images/site.webmanifest">
@@ -62,16 +119,88 @@
 
   <body>
 
+    <button id="theme-toggle">Night Mode</button>
+
+    <script>
+      const toggleButton = document.getElementById('theme-toggle');
+      const body = document.body;
+
+      // 初始化夜间模式状态
+      if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        toggleButton.textContent = 'Light Mode';
+        toggleButton.classList.remove('day-mode');
+        toggleButton.classList.add('night-mode');
+      }
+
+      // 切换模式
+      toggleButton.addEventListener('click', () => {
+        if (body.classList.contains('night-mode')) {
+          body.classList.remove('night-mode');
+          toggleButton.textContent = 'Night Mode';
+          toggleButton.classList.remove('night-mode');
+          toggleButton.classList.add('day-mode');
+          localStorage.setItem('nightMode', 'disabled');
+        } else {
+          body.classList.add('night-mode');
+          toggleButton.textContent = 'Light Mode';
+          toggleButton.classList.remove('day-mode');
+          toggleButton.classList.add('night-mode');
+          localStorage.setItem('nightMode', 'enabled');
+        }
+      });
+    </script>
+
+    <!-- <script>
+      const toggleButton = document.getElementById('theme-toggle');
+      const body = document.body;
+
+      // 初始化夜间模式状态
+      if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        toggleButton.textContent = 'Light Mode';
+      }
+
+      // 切换模式
+      toggleButton.addEventListener('click', () => {
+        if (body.classList.contains('night-mode')) {
+          body.classList.remove('night-mode');
+          toggleButton.textContent = 'Night Mode';
+          localStorage.setItem('nightMode', 'disabled');
+        } else {
+          body.classList.add('night-mode');
+          toggleButton.textContent = 'Light Mode';
+          localStorage.setItem('nightMode', 'enabled');
+        }
+      });
+    </script> -->
+
+    <!-- 添加切换模式的 JavaScript -->
+    <!-- <script>
+      const toggleButton = document.getElementById('theme-toggle');
+      toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('night-mode');
+        // 保存用户偏好到 localStorage
+        const isNightMode = document.body.classList.contains('night-mode');
+        localStorage.setItem('nightMode', isNightMode ? 'enabled' : 'disabled');
+      });
+
+      // 检查用户的偏好设置并应用
+      if (localStorage.getItem('nightMode') === 'enabled') {
+        document.body.classList.add('night-mode');
+      }
+    </script> -->
+
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
 <![endif]-->
-    <div class="masthead">
+  <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="#about-me">Homepage</a></li>
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="#about-me">Homepage</a></li>
           
             <li class="masthead__menu-item"><a href="/#about-me">About Me</a></li>
 
@@ -239,16 +368,7 @@ My name is Jun Yin. Currently, I am a Master Student in the Department of Comput
   <li><em>2024.08</em>: 😼 Serve as the reviewer of The WebConf 2025</li>
   <li><em>2024.08</em>: 😼 Serve as the reviewer of ICLR 2025</li>
   <li><em>2023.09</em>: 🎉 Two papers are accepted by NeurIPS 2023</li>
-<!--   <li><em>2024.05</em>: 🎉 One paper is accepted by SIGKDD 2024</li>
-  <li><em>2024.05</em>: I will serve as a PC member of AAAI 2025</li>
-  <li><em>2024.05</em>: I serve as a PC member of NeurIPS 2024</li>
-  <li><em>2024.04</em>: 🎉 One paper is accepted by IJCAI 2024</li>
-  <li><em>2024.04</em>: 🎉 One paper is published at TKDE 2024</li>
-  <li><em>2023.12</em>: 🎉 Two papers are accepted by ICDE 2024</li>
-  <li><em>2023.09</em>: I start studying at NTU, Singapore, as a visiting PhD</li> -->
 </ul>
-
-
 
 <h1 id="-honor-and-award">🎖 Honor and Award</h1>
 <ul>
