@@ -90,10 +90,12 @@
 <meta http-equiv="cleartype" content="on">
 <head>
   <base target="_blank">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://cdn.counter.dev/script.js" data-id="d3952e27-e202-4d18-8a37-10fd7136c4af" data-utcoffset="8"></script>
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /> -->
   <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<!--   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script> -->
 </head>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/cat_icon.jpg">
@@ -408,7 +410,55 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 <!-- <div style="float: left;"> -->
 <!-- <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=280&amp;t=tt&amp;d=jHHwvpNeh_7brAFqjgZgpAQM64XBZm_LZ-pLBIJqDts"></script> -->
 <!-- <div id="visitor-map" style="width: 100%; height: 400px;"></div> -->
-<div id="visitor-map" style="height: 400px; width: 100%; margin-bottom: 30px;"></div>
+<!-- <div id="visitor-map" style="height: 400px; width: 100%; margin-bottom: 30px;"></div> -->
+<div id="map" style="height: 400px; width: 100%;"></div>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  // 初始化地图
+  const map = L.map('map').setView([0, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  // 获取访客的IP地址和地理位置
+  fetch('https://ip-api.com/json')
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        // 将访客数据发送到Counter.dev
+        fetch('https://api.counter.dev/track', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ip: data.query,
+            country: data.country,
+            region: data.region,
+            city: data.city,
+            lat: data.lat,
+            lon: data.lon
+          })
+        });
+
+        // 在地图上标记访客位置
+        L.marker([data.lat, data.lon]).addTo(map)
+          .bindPopup(`Country: ${data.country}<br>Region: ${data.region}<br>City: ${data.city}`);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+
+  // 获取所有访客数据并标记在地图上
+  fetch('https://api.counter.dev/visitors?site_id=d3952e27-e202-4d18-8a37-10fd7136c4af')
+    .then(response => response.json())
+    .then(visitors => {
+      visitors.forEach(visitor => {
+        if (visitor.lat && visitor.lon) {
+          L.marker([visitor.lat, visitor.lon]).addTo(map)
+            .bindPopup(`Country: ${visitor.country}<br>Region: ${visitor.region}<br>City: ${visitor.city}`);
+        }
+      });
+    })
+    .catch(error => console.error('Error:', error));
+</script>
 
 </div>
 
