@@ -466,11 +466,18 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
     .then(visitors => {
       const markers = [];
       visitors.forEach(visitor => {
-        if (visitor.lat && visitor.lon) {
-          const marker = L.marker([visitor.lat, visitor.lon])
-            .bindPopup(`Country: ${visitor.country}<br>Region: ${visitor.region}<br>City: ${visitor.city}`);
-          markers.push(marker);
-          marker.addTo(map);
+        if (visitor.ip) {
+          fetch(`https://ip-api.com/json/${visitor.ip}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === 'success') {
+                const marker = L.marker([data.lat, data.lon])
+                  .bindPopup(`Country: ${data.country}<br>Region: ${data.region}<br>City: ${data.city}`);
+                markers.push(marker);
+                marker.addTo(map);
+              }
+            })
+            .catch(error => console.error('Error:', error));
         }
       });
 
