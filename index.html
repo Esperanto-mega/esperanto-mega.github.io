@@ -90,9 +90,6 @@
 <meta http-equiv="cleartype" content="on">
 <head>
   <base target="_blank">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-  <!-- world-countries-capitals 数据库，用于国家代码转经纬度 -->
-  <script src="https://unpkg.com/world-countries-capitals@1.5.0/dist/data.min.js"></script>
 </head>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/cat_icon.jpg">
@@ -366,56 +363,7 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 </ul>
 
 <h1 id="-visitor">👀 Visitor</h1>
-<!-- 访客地图展示区域 -->
-<div id="visitor-map" style="height: 500px; width: 100%; margin: 20px 0; border: 1px solid #ccc; border-radius: 8px;"></div>
-<script>
-  // 初始化 Leaflet 地图
-  const visitorMap = L.map('visitor-map').setView([20, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(visitorMap);
-
-  /**
-   * 根据国家 ISO2 代码获取国家首都的经纬度
-   * world-countries-capitals 库会在全局提供 allCountries 数组数据
-   */
-  function getLatLngFromCountryCode(code) {
-    if (!window.allCountries) return null;
-    const countryData = window.allCountries.find(c => c.ISO2 === code);
-    if (countryData) {
-      return [parseFloat(countryData.CapitalLatitude), parseFloat(countryData.CapitalLongitude)];
-    }
-    return null;
-  }
-
-  /**
-   * 从 Counter.dev 获取访客国家数据并在地图上打点
-   * 数据格式示例：[ { country: "US", count: 10 }, ... ]
-   */
-  async function loadVisitorData() {
-    try {
-      // 用你的 Counter.dev ID 替换 YOUR-ID-HERE
-      const response = await fetch('https://counter.dev/geo.json?token=d3952e27-e202-4d18-8a37-10fd7136c4af');
-      const data = await response.json();
-
-      data.forEach(item => {
-        const coords = getLatLngFromCountryCode(item.country);
-        if (coords) {
-          L.circleMarker(coords, {
-            radius: Math.min(5 + item.count, 15),  // 根据访问数量调整半径（最小5，最大15）
-            fillColor: "red",
-            fillOpacity: 0.5,
-            color: "#f03"
-          }).addTo(visitorMap).bindPopup(`来自 ${item.country} 的访问者：${item.count}`);
-        }
-      });
-    } catch (e) {
-      console.error("加载访客数据失败:", e);
-    }
-  }
-
-  loadVisitorData();
-</script>
+<script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=ycpnC2lkDUYN9S-P8SOee7SyXVtP7VHv-wb8_SE8G58"></script>
 <hr>
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
