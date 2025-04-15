@@ -90,8 +90,23 @@
 <meta http-equiv="cleartype" content="on">
 <head>
   <base target="_blank">
+<!--   version 3 -->
+  <!-- Counter.dev visitor tracker -->
+  <script defer src="https://cdn.counter.dev/script.js" data-id="d3952e27-e202-4d18-8a37-10fd7136c4af" data-utcoffset="8"></script>
+  <!-- Chart.js 和 Geo 插件 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo"></script>
+
+
+
+<!--   version 2
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://cdn.counter.dev/script.js" data-id="d3952e27-e202-4d18-8a37-10fd7136c4af" data-utcoffset="8"></script>
+  <script src="https://cdn.counter.dev/script.js" data-id="d3952e27-e202-4d18-8a37-10fd7136c4af" data-utcoffset="8"></script> -->
+  
+  
+  
+  
+  
   <!-- Leaflet CSS -->
 <!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /> -->
   <!-- Leaflet JS -->
@@ -413,9 +428,62 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 <!-- <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=280&amp;t=tt&amp;d=jHHwvpNeh_7brAFqjgZgpAQM64XBZm_LZ-pLBIJqDts"></script> -->
 <!-- <div id="visitor-map" style="width: 100%; height: 400px;"></div> -->
 <!-- <div id="visitor-map" style="height: 400px; width: 100%; margin-bottom: 30px;"></div> -->
-<div id="map" style="height: 500px; width: 100%; max-width: 1000px; margin: 0 auto;"></div>
+<!-- <div id="map" style="height: 500px; width: 100%; max-width: 1000px; margin: 0 auto;"></div> -->
+<canvas id="visitorChart" style="width: 100%; max-width: 800px; height: 500px; margin-bottom: 30px;"></canvas>       
 <hr>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+  async function loadVisitorData() {
+    const res = await fetch("https://counter.dev/api/d3952e27-e202-4d18-8a37-10fd7136c4af.json");
+    const visitors = await res.json();
+
+    const countryCounts = {};
+    visitors.forEach(item => {
+      countryCounts[item.country] = item.count;
+    });
+
+    const world = await fetch("https://unpkg.com/world-atlas/countries-50m.json").then(r => r.json());
+    const features = window.chartjs.chartGeo.topojson.feature(world, world.objects.countries).features;
+
+    new Chart(document.getElementById("visitorChart").getContext("2d"), {
+      type: "choropleth",
+      data: {
+        labels: features.map(f => f.properties.name),
+        datasets: [{
+          label: "Visitor Count by Country",
+          data: features.map(f => ({
+            feature: f,
+            value: countryCounts[f.id] || 0
+          }))
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const val = ctx.raw.value;
+                return `${ctx.chart.data.labels[ctx.dataIndex]}: ${val} visitor${val !== 1 ? 's' : ''}`;
+              }
+            }
+          }
+        },
+        scales: {
+          xy: {
+            projection: 'equalEarth'
+          }
+        }
+      }
+    });
+  }
+
+  // 加载地图数据
+  loadVisitorData();
+</script>            
+            
+<!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
   // 初始化地图
   const map = L.map('map').setView([0, 0], 2);
@@ -488,7 +556,7 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
       }
     })
     .catch(error => console.error('Error:', error));
-</script>
+</script> -->
 
 </div>
 
