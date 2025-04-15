@@ -90,6 +90,10 @@
 <meta http-equiv="cleartype" content="on">
 <head>
   <base target="_blank">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 </head>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/cat_icon.jpg">
@@ -401,35 +405,10 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 </ul>
 
 <h1 id="-visitors">👀 Visitors</h1>
-<div style="float: left;">
+<!-- <div style="float: left;"> -->
 <!-- <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=280&amp;t=tt&amp;d=jHHwvpNeh_7brAFqjgZgpAQM64XBZm_LZ-pLBIJqDts"></script> -->
-<script>
-  // 你的 IPinfo API 密钥
-  const apiKey = '17707a86c8d747';  // 替换为你的 API 密钥
-
-  // 发送请求获取访客的 IP 地址和位置信息
-  fetch(`https://ipinfo.io?token=${apiKey}`)
-    .then(response => response.json())
-    .then(data => {
-      // 打印获取到的位置信息
-      console.log(data);
-
-      // 获取位置（经纬度）
-      const location = data.loc.split(',');
-      const lat = parseFloat(location[0]);  // 纬度
-      const lon = parseFloat(location[1]);  // 经度
-
-      // 你可以将这些信息用于 Mapbox 或其他地图展示
-      console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-
-      // 例如：使用 Mapbox 更新地图中心
-      // 这里是一个简单的 Mapbox 示例代码
-      map.setCenter([lon, lat]);
-      map.setZoom(12); // 可根据需要调整缩放级别
-      new mapboxgl.Marker().setLngLat([lon, lat]).addTo(map);  // 在地图上标记访客位置
-    })
-    .catch(error => console.error('Error fetching location:', error));
-</script>
+<!-- <div id="visitor-map" style="width: 100%; height: 400px;"></div> -->
+<div id="visitor-map" style="height: 400px; width: 100%; margin-bottom: 30px;"></div>
 
 </div>
 
@@ -462,6 +441,34 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 <!--   gtag('config', "G-H5R4EW3E4D"); -->
 <!-- </script> -->
 
+<script>
+  // 你的 IPinfo API 密钥（可选）
+  const ipinfoToken = '17707a86c8d747'; // 可留空，但有 token 更稳定
+
+  fetch(`https://ipinfo.io?token=${ipinfoToken}`)
+    .then(response => response.json())
+    .then(data => {
+      const loc = data.loc.split(',');
+      const lat = parseFloat(loc[0]);
+      const lon = parseFloat(loc[1]);
+
+      // 初始化 Leaflet 地图
+      const map = L.map('visitor-map').setView([lat, lon], 10);
+
+      // 使用 OpenStreetMap 作为底图
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // 添加访客位置标记
+      L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup(`You are visiting from ${data.city}, ${data.country}`)
+        .openPopup();
+    })
+    .catch(err => console.error('IPinfo fetch failed:', err));
+</script>
 
 <script>
     $(document).ready(function () {
