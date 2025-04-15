@@ -464,18 +464,19 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
   fetch('https://api.counter.dev/visitors?site_id=d3952e27-e202-4d18-8a37-10fd7136c4af')
     .then(response => response.json())
     .then(visitors => {
+      const markers = [];
       visitors.forEach(visitor => {
         if (visitor.lat && visitor.lon) {
-          L.marker([visitor.lat, visitor.lon]).addTo(map)
+          const marker = L.marker([visitor.lat, visitor.lon])
             .bindPopup(`Country: ${visitor.country}<br>Region: ${visitor.region}<br>City: ${visitor.city}`);
+          markers.push(marker);
+          marker.addTo(map);
         }
       });
 
       // 调整地图视图以适应所有标记
-      if (visitors.length > 0) {
-        const group = L.featureGroup(visitors.map(visitor => {
-          return L.marker([visitor.lat, visitor.lon]);
-        }));
+      if (markers.length > 0) {
+        const group = L.featureGroup(markers);
         map.fitBounds(group.getBounds(), { padding: [50, 50] });
       }
     })
