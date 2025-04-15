@@ -90,40 +90,9 @@
 <meta http-equiv="cleartype" content="on">
 <head>
   <base target="_blank">
-<!--   version 3 -->
-  <!-- Counter.dev tracking script -->
-  <script async src="https://cdn.counter.dev/script.js"
-          data-id="d3952e27-e202-4d18-8a37-10fd7136c4af"
-          data-utcoffset="8"></script>
-
-  <!-- Leaflet.js 地图库 -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <!-- world-countries-capitals 数据库，用于国家代码转经纬度 -->
   <script src="https://unpkg.com/world-countries-capitals@1.5.0/dist/data.min.js"></script>
-
-  <style>
-    #map {
-      height: 500px;
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-  </style>
-
-
-
-<!--   version 2
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://cdn.counter.dev/script.js" data-id="d3952e27-e202-4d18-8a37-10fd7136c4af" data-utcoffset="8"></script> -->
-  
-  
-  
-  
-  
-  <!-- Leaflet CSS -->
-<!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /> -->
-  <!-- Leaflet JS -->
-<!--   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script> -->
 </head>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/cat_icon.jpg">
@@ -184,46 +153,6 @@
         }
       });
     </script>
-
-    <!-- <script>
-      const toggleButton = document.getElementById('theme-toggle');
-      const body = document.body;
-
-      // 初始化夜间模式状态
-      if (localStorage.getItem('nightMode') === 'enabled') {
-        body.classList.add('night-mode');
-        toggleButton.textContent = 'Light Mode';
-      }
-
-      // 切换模式
-      toggleButton.addEventListener('click', () => {
-        if (body.classList.contains('night-mode')) {
-          body.classList.remove('night-mode');
-          toggleButton.textContent = 'Night Mode';
-          localStorage.setItem('nightMode', 'disabled');
-        } else {
-          body.classList.add('night-mode');
-          toggleButton.textContent = 'Light Mode';
-          localStorage.setItem('nightMode', 'enabled');
-        }
-      });
-    </script> -->
-
-    <!-- 添加切换模式的 JavaScript -->
-    <!-- <script>
-      const toggleButton = document.getElementById('theme-toggle');
-      toggleButton.addEventListener('click', () => {
-        document.body.classList.toggle('night-mode');
-        // 保存用户偏好到 localStorage
-        const isNightMode = document.body.classList.contains('night-mode');
-        localStorage.setItem('nightMode', isNightMode ? 'enabled' : 'disabled');
-      });
-
-      // 检查用户的偏好设置并应用
-      if (localStorage.getItem('nightMode') === 'enabled') {
-        document.body.classList.add('night-mode');
-      }
-    </script> -->
 
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
@@ -437,186 +366,59 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
 </ul>
 
 <h1 id="-visitor">👀 Visitor</h1>
-<!-- <div style="float: left;"> -->
-<!-- <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=280&amp;t=tt&amp;d=jHHwvpNeh_7brAFqjgZgpAQM64XBZm_LZ-pLBIJqDts"></script> -->
-<!-- <div id="visitor-map" style="width: 100%; height: 400px;"></div> -->
-<!-- <div id="visitor-map" style="height: 400px; width: 100%; margin-bottom: 30px;"></div> -->
-<!-- <div id="map" style="height: 500px; width: 100%; max-width: 1000px; margin: 0 auto;"></div> -->
-
-<div id="map"></div>
-
+<!-- 访客地图展示区域 -->
+<div id="visitor-map" style="height: 500px; width: 100%; margin: 20px 0; border: 1px solid #ccc; border-radius: 8px;"></div>
 <script>
-  // 初始化地图
-  const map = L.map('map').setView([20, 0], 2);
+  // 初始化 Leaflet 地图
+  const visitorMap = L.map('visitor-map').setView([20, 0], 2);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(map);
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(visitorMap);
 
-  // 国家代码 => 经纬度（来自 CDN 数据库）
+  /**
+   * 根据国家 ISO2 代码获取国家首都的经纬度
+   * world-countries-capitals 库会在全局提供 allCountries 数组数据
+   */
   function getLatLngFromCountryCode(code) {
-    const match = window.allCountries.find(c => c['ISO2'] === code);
-    if (match) return [parseFloat(match.CapitalLatitude), parseFloat(match.CapitalLongitude)];
+    if (!window.allCountries) return null;
+    const countryData = window.allCountries.find(c => c.ISO2 === code);
+    if (countryData) {
+      return [parseFloat(countryData.CapitalLatitude), parseFloat(countryData.CapitalLongitude)];
+    }
     return null;
   }
 
-  // 拉取 Counter.dev 访客数据
-  async function fetchCountries() {
+  /**
+   * 从 Counter.dev 获取访客国家数据并在地图上打点
+   * 数据格式示例：[ { country: "US", count: 10 }, ... ]
+   */
+  async function loadVisitorData() {
     try {
-      const res = await fetch(`https://counter.dev/geo.json?token=d3952e27-e202-4d18-8a37-10fd7136c4af`);
-      const data = await res.json(); // 格式: [{ country: "US", count: 10 }, ...]
+      // 用你的 Counter.dev ID 替换 YOUR-ID-HERE
+      const response = await fetch('https://counter.dev/geo.json?token=YOUR-ID-HERE');
+      const data = await response.json();
 
-      data.forEach(entry => {
-        const coords = getLatLngFromCountryCode(entry.country);
+      data.forEach(item => {
+        const coords = getLatLngFromCountryCode(item.country);
         if (coords) {
           L.circleMarker(coords, {
-            radius: Math.min(5 + entry.count, 15),
+            radius: Math.min(5 + item.count, 15),  // 根据访问数量调整半径（最小5，最大15）
             fillColor: "red",
             fillOpacity: 0.5,
             color: "#f03"
-          }).addTo(map).bindPopup(`来自 ${entry.country} 的访问者: ${entry.count}`);
+          }).addTo(visitorMap).bindPopup(`来自 ${item.country} 的访问者：${item.count}`);
         }
       });
     } catch (e) {
-      console.error("加载国家数据失败", e);
+      console.error("加载访客数据失败:", e);
     }
   }
 
-  fetchCountries();
+  loadVisitorData();
 </script>
-<!-- <canvas id="visitorChart" style="width: 100%; max-width: 800px; height: 500px; margin-bottom: 30px;"></canvas> -->
 <hr>
-
-<!-- <script>
-  async function loadVisitorMap() {
-    // 获取访客国家分布数据
-    const res = await fetch("https://counter.dev/api/d3952e27-e202-4d18-8a37-10fd7136c4af.json");
-    const data = await res.json();
-
-    // 转换为 { "US": 12, "CN": 5, ... }
-    const visitorCounts = {};
-    data.forEach(item => {
-      visitorCounts[item.country] = item.count;
-    });
-
-    // 获取世界地图数据（topojson）
-    const worldData = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(res => res.json());
-    const countries = ChartGeo.topojson.feature(worldData, worldData.objects.countries).features;
-
-    // 创建 Choropleth 图
-    new Chart(document.getElementById("visitorChart").getContext("2d"), {
-      type: 'choropleth',
-      data: {
-        labels: countries.map(d => d.properties.name),
-        datasets: [{
-          label: 'Visitors by Country',
-          data: countries.map(feature => ({
-            feature: feature,
-            value: visitorCounts[feature.id] || 0
-          })),
-          outline: countries,
-          backgroundColor: 'white',
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: ctx => {
-                const val = ctx.raw.value;
-                return `${ctx.chart.data.labels[ctx.dataIndex]}: ${val} visitor${val !== 1 ? 's' : ''}`;
-              }
-            }
-          }
-        },
-        scales: {
-          xy: {
-            projection: 'equalEarth'
-          }
-        }
-      }
-    });
-  }
-
-  loadVisitorMap();
-</script> -->
-            
-<!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script>
-  // 初始化地图
-  const map = L.map('map').setView([0, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-  // 设置地图的最小和最大缩放级别
-  map.setMinZoom(1);
-  map.setMaxZoom(18);
-
-  // 设置地图的边界
-  const bounds = L.latLngBounds(
-    [-90, -180], // 南纬90度，西经180度
-    [90, 180]    // 北纬90度，东经180度
-  );
-  map.setMaxBounds(bounds);
-
-  // 获取访客的IP地址和地理位置
-  fetch('https://ip-api.com/json')
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        // 将访客数据发送到Counter.dev
-        fetch('https://api.counter.dev/track', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ip: data.query,
-            country: data.country,
-            region: data.region,
-            city: data.city,
-            lat: data.lat,
-            lon: data.lon
-          })
-        });
-
-        // 在地图上标记访客位置
-        L.marker([data.lat, data.lon]).addTo(map)
-          .bindPopup(`Country: ${data.country}<br>Region: ${data.region}<br>City: ${data.city}`);
-      }
-    })
-    .catch(error => console.error('Error:', error));
-
-  // 获取所有访客数据并标记在地图上
-  fetch('https://api.counter.dev/visitors?site_id=d3952e27-e202-4d18-8a37-10fd7136c4af')
-    .then(response => response.json())
-    .then(visitors => {
-      const markers = [];
-      visitors.forEach(visitor => {
-        if (visitor.ip) {
-          fetch(`https://ip-api.com/json/${visitor.ip}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.status === 'success') {
-                const marker = L.marker([data.lat, data.lon])
-                  .bindPopup(`Country: ${data.country}<br>Region: ${data.region}<br>City: ${data.city}`);
-                markers.push(marker);
-                marker.addTo(map);
-              }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-      });
-
-      // 调整地图视图以适应所有标记
-      if (markers.length > 0) {
-        const group = L.featureGroup(markers);
-        map.fitBounds(group.getBounds(), { padding: [50, 50] });
-      }
-    })
-    .catch(error => console.error('Error:', error));
-</script> -->
-
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </div>
 
           </section>
@@ -625,76 +427,6 @@ From October 2023 to February 2025, I work as a Research Intern at Microsoft AI,
     </div>
 
     <script src="assets/js/main.min.js"></script>
-
-
-    
-<!-- Google tag (gtag.js) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-VQHZ2VT7R0"></script> -->
-<!-- <script> -->
-<!--   window.dataLayer = window.dataLayer || []; -->
-<!--   function gtag(){dataLayer.push(arguments);} -->
-<!--   gtag('js', new Date()); -->
-
-<!--   gtag('config', 'G-VQHZ2VT7R0'); -->
-<!-- </script> -->
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5R4EW3E4D"></script> -->
-<!-- <script> -->
-<!--   window.dataLayer = window.dataLayer || []; -->
-<!--   function gtag(){dataLayer.push(arguments);} -->
-<!--   gtag('js', new Date()); -->
-
-<!--   gtag('config', "G-H5R4EW3E4D"); -->
-<!-- </script> -->
-
-<script>
-  // 你的 IPinfo API 密钥（可选）
-  const ipinfoToken = '17707a86c8d747'; // 可留空，但有 token 更稳定
-
-  fetch(`https://ipinfo.io?token=${ipinfoToken}`)
-    .then(response => response.json())
-    .then(data => {
-      const loc = data.loc.split(',');
-      const lat = parseFloat(loc[0]);
-      const lon = parseFloat(loc[1]);
-
-      // 初始化 Leaflet 地图
-      const map = L.map('visitor-map').setView([lat, lon], 10);
-
-      // 使用 OpenStreetMap 作为底图
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
-
-      // 添加访客位置标记
-      L.marker([lat, lon])
-        .addTo(map)
-        .bindPopup(`You are visiting from ${data.city}, ${data.country}`)
-        .openPopup();
-    })
-    .catch(err => console.error('IPinfo fetch failed:', err));
-</script>
-
-<script>
-    $(document).ready(function () {
-        
-        var gsDataBaseUrl = 'https://esperanto-mega.github.io/'
-        
-        $.getJSON(gsDataBaseUrl + "google-scholar-stats/gs_data.json", function (data) {
-            var totalCitation = data['citedby']
-            document.getElementById('total_cit').innerHTML = totalCitation;
-            var citationEles = document.getElementsByClassName('show_paper_citations')
-            Array.prototype.forEach.call(citationEles, element => {
-                var paperId = element.getAttribute('data')
-                var numCitations = data['publications'][paperId]['num_citations']
-                element.innerHTML = '| Citations: ' + numCitations;
-            });
-        });
-    })
-</script>
-
 
   </body>
 </html>
