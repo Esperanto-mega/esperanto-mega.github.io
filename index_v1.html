@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jun Yin - Homepage</title>
+  <meta name="description" content="Jun Yin's Academic Homepage">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome & Academicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    /* --- 1. VARIABLES & THEME --- */
+    :root {
+      /* Color Palette */
+      --bg-body: #f8f9fa;
+      --bg-card: rgba(255, 255, 255, 0.8); /* Semi-transparent for glass effect */
+      --bg-nav: rgba(255, 255, 255, 0.85);
+      --text-main: #2c3e50;
+      --text-muted: #64748b;
+      --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
+      --border-color: rgba(0, 0, 0, 0.08);
+      
+      /* Shadows & Radius */
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 6px 12px -2px rgba(0,0,0,0.1);
+      --shadow-nav: 0 1px 10px rgba(0,0,0,0.05);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+      
+      /* Background Gradient Objects (Light Mode) */
+      --bg-gradient: radial-gradient(at 0% 0%, hsla(210,100%,96%,1) 0, transparent 50%), 
+                     radial-gradient(at 100% 100%, hsla(220,60%,97%,1) 0, transparent 50%),
+                     radial-gradient(at 100% 0%, hsla(240,40%,98%,1) 0, transparent 50%);
+    }
+
+    body.night-mode {
+      --bg-body: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --bg-nav: rgba(15, 23, 42, 0.85);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent-color: #60a5fa;
+      --accent-hover: #93c5fd;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+      --shadow-md: 0 6px 12px -2px rgba(0,0,0,0.4);
+      --shadow-nav: 0 1px 10px rgba(0,0,0,0.5);
+
+      /* Background Gradient Objects (Dark Mode) */
+      --bg-gradient: radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.08), transparent 25%), 
+                     radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.08), transparent 25%);
+    }
+
+    /* --- 2. GLOBAL STYLES --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; /* Prevents nav from covering headers */ }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-body);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed; /* Keep gradient still while scrolling */
+      color: var(--text-main);
+      line-height: 1.6;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      font-size: 16px;
+      padding-top: 70px; /* Space for fixed navbar */
+    }
+
+    a { color: var(--accent-color); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent-hover); }
+    
+    h1, h2, h3 { color: var(--text-main); margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+    h1 { 
+        font-size: 1.6rem; 
+        margin-top: 1rem; 
+        padding-bottom: 0.5rem; 
+        border-bottom: 1px solid var(--border-color); 
+        display: flex; 
+        align-items: center; 
+        gap: 12px; 
+    }
+    
+    p { margin-bottom: 1rem; }
+    ul { margin-bottom: 1rem; padding-left: 1.2rem; }
+    li { margin-bottom: 0.5rem; }
+
+    /* --- 3. NAVIGATION BAR --- */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 65px;
+        background: var(--bg-nav);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow-nav);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-logo {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        display: none; /* Hidden on desktop to keep focus on links, visible on mobile if needed */
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links a {
+        color: var(--text-muted);
+        font-weight: 500;
+        font-size: 0.95rem;
+        position: relative;
+        padding: 5px 0;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+        color: var(--accent-color);
+    }
+
+    .nav-links a.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--accent-color);
+        border-radius: 2px;
+    }
+
+    /* Dark Mode Toggle in Nav */
+    .theme-toggle-btn {
+        background: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+    .theme-toggle-btn:hover {
+        background: var(--border-color);
+        color: var(--accent-color);
+    }
+
+    /* --- 4. LAYOUT --- */
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      gap: 40px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+    }
+    
+    .profile-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px); /* Glass effect */
+      padding: 30px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      position: sticky;
+      top: 90px; /* Adjusted for Fixed Nav */
+      border: 1px solid var(--border-color);
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 4px solid var(--bg-body);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .author-name { font-size: 1.3rem; margin-bottom: 5px; }
+    .author-bio { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    body.night-mode .social-links a { background: rgba(255,255,255,0.05); }
+    .social-links a:hover { color: white; background: var(--accent-color); transform: translateY(-2px); }
+    
+    .contact-list {
+      text-align: left;
+      margin-top: 25px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    .contact-list li { list-style: none; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+
+    /* Main Content */
+    .main-content { flex: 1; min-width: 0; }
+
+    section { margin-bottom: 50px; }
+
+    /* --- 5. COMPONENTS --- */
+    
+    /* Paper Cards */
+    .paper-box {
+      display: flex;
+      background: var(--bg-card);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: var(--transition);
+      gap: 20px;
+    }
+    .paper-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent-color);
+    }
+    .paper-img-container {
+      flex-shrink: 0;
+      width: 160px;
+      position: relative;
+    }
+    .paper-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .badge {
+      position: absolute;
+      top: -10px;
+      left: -5px;
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .paper-details h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text-main); transition: color 0.2s; }
+    .paper-box:hover .paper-details h3 { color: var(--accent-color); }
+    
+    .paper-authors { font-size: 0.9rem; margin-bottom: 6px; color: var(--text-muted); }
+    .paper-venue { font-size: 0.85rem; font-weight: 500; color: var(--text-main); }
+    
+    .tag-ccf {
+      display: inline-block;
+      background: rgba(220, 38, 38, 0.1);
+      color: #dc2626;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+    body.night-mode .tag-ccf { background: rgba(220, 38, 38, 0.3); color: #fca5a5; }
+    
+    /* News Ticker Style */
+    .news-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 25px;
+    }
+    .news-item { display: flex; gap: 15px; margin-bottom: 12px; font-size: 0.95rem; align-items: baseline; }
+    .news-item:last-child { margin-bottom: 0; }
+    .news-date { 
+        font-weight: 600; 
+        min-width: 85px; 
+        color: var(--accent-color); 
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+    }
+
+    /* Education & Experience Lists */
+    .exp-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        padding: 15px 20px;
+        border-radius: var(--radius);
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: var(--transition);
+    }
+    .exp-item:hover { border-color: var(--accent-color); }
+    .exp-main { flex: 1; }
+    .exp-meta { text-align: right; font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Photo Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      aspect-ratio: 1; 
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      font-size: 0.75rem;
+      padding: 20px 5px 5px 5px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 850px) {
+      .container { flex-direction: column; margin-top: 20px; gap: 30px; }
+      .sidebar { width: 100%; }
+      .profile-card { position: relative; top: 0; display: flex; flex-direction: column; align-items: center; }
+      .paper-box { flex-direction: column; }
+      .paper-img-container { width: 100%; max-width: 200px; margin: 0 auto; }
+      .badge { left: 0; }
+      
+      /* Mobile Nav */
+      .nav-links { 
+        gap: 15px; 
+        font-size: 0.85rem;
+        overflow-x: auto; /* Scrollable on small screens */
+        white-space: nowrap;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-links::-webkit-scrollbar { display: none; }
+      .nav-container { padding: 0 15px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- FIXED NAVIGATION BAR -->
+  <nav class="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">Jun Yin</div> <!-- Visible on mobile if adjusted -->
+          
+          <ul class="nav-links">
+              <li><a href="#about-me" class="nav-link">About Me</a></li>
+              <li><a href="#education" class="nav-link">Education</a></li>
+              <li><a href="#publication" class="nav-link">Publication</a></li>
+              <li><a href="#experience" class="nav-link">Experience</a></li>
+              <li><a href="#award" class="nav-link">Honor and Award</a></li>
+              <li><a href="#news" class="nav-link">News</a></li>
+              <li><a href="#after-research" class="nav-link">Life</a></li>
+          </ul>
+
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+              <i class="fas fa-moon"></i>
+          </button>
+      </div>
+  </nav>
+
+  <div class="container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <img src="images/junyin.jpg" alt="Jun Yin" class="profile-img">
+        <h2 class="author-name">Jun YIN (殷珺)</h2>
+        <div class="author-bio">PhD Student</div>
+        <div class="author-bio">The Hong Kong Polytechnic University</div>
+        
+        <ul class="contact-list">
+          <li><i class="fa-solid fa-location-dot fa-fw" style="color:var(--accent-color)"></i> Hong Kong / Jiangsu</li>
+          <li><i class="fa-solid fa-envelope fa-fw" style="color:var(--accent-color)"></i> junmay.yin@connect.polyu.hk</li>
+        </ul>
+
+        <div class="social-links">
+            <a href="mailto:junmay.yin@connect.polyu.hk" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://scholar.google.com/citations?user=eRouT0MAAAAJ&hl=zh-CN" title="Google Scholar"><i class="ai ai-google-scholar"></i></a>
+            <a href="https://github.com/MiaoHaoSunny" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://dblp.org/pid/276/5069-1.html" title="DBLP"><i class="ai ai-dblp"></i></a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- ABOUT ME -->
+      <section id="about-me">
+        <h1><i class="fa-solid fa-user"></i> About Me</h1>
+        <div style="background: var(--bg-card); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border-color);">
+            <p>
+            Hello! I am a <strong>PhD Student</strong> in the Department of Data Science and Artificial Intelligence at <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic University</a>, supervised by Prof. <a href="https://chengqi-zhang.github.io">Chengqi ZHANG</a> and Prof. <a href="https://shiruipan.github.io">Shirui PAN</a>.
+            </p>
+            <p>
+            I received my Master's degree in Electronic Information and Bachelor's degree in Computer Science from <strong>Central South University</strong> in 2025 and 2022, respectively. During my studies, I was a member of the BigData 4 Urban Intelligence Lab led by Prof. <a href="https://senzhangwangcsu.github.io/index.html">Senzhang WANG</a>.
+            </p>
+            <p>
+            Previously, I worked as a Research Intern at <strong>Microsoft AI</strong> (Oct 2023 - Feb 2025) supervised by <a href="https://whatsname1991.github.io/">Chaozhuo LI</a>, focusing on LLM-based generative recommendation.
+            </p>
+            
+            <div style="background: rgba(37, 99, 235, 0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-color); margin-top: 20px;">
+                <h3 style="margin: 0 0 10px 0; font-size: 1rem; color: var(--accent-color);">🎯 Research Interests</h3>
+                <ul style="margin: 0; padding-left: 20px; color: var(--text-main);">
+                    <li><strong>Large Language Models & Recommender Systems</strong></li>
+                    <li><strong>Graph Neural Networks (Explainability & Interpretability)</strong></li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+      <!-- NEWS -->
+      <section id="news">
+        <h1><i class="fa-solid fa-newspaper"></i> News</h1>
+        <div class="news-box">
+            <div class="news-item">
+                <span class="news-date">Jan 2025</span>
+                <span>One paper accepted by <strong>TheWebConf 2025</strong> as an <span style="color: var(--accent-color); font-weight:bold; background: rgba(37,99,235,0.1); padding: 2px 6px; border-radius:4px;">Oral</span> presentation! 🎉</span>
+            </div>
+            <div class="news-item">
+                <span class="news-date">Oct 2024</span>
+                <span>Awarded the <strong>National Scholarship</strong> of CSU. 🏆</span>
+            </div>
+            <div class="news-item">
+                <span class="news-date">Sep 2023</span>
+                <span>Two papers accepted by <strong>NeurIPS 2023</strong>.</span>
+            </div>
+            <div class="news-item">
+                <span class="news-date">Sep 2023</span>
+                <span>Joined Microsoft AI as a Research Intern.</span>
+            </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section id="education">
+        <h1><i class="fa-solid fa-graduation-cap"></i> Education</h1>
+        
+        <div class="exp-item">
+            <div class="exp-main">
+                <div style="font-weight: 700; font-size: 1.05rem;">The Hong Kong Polytechnic University</div>
+                <div style="color: var(--text-muted);">Ph.D. in Machine Learning</div>
+            </div>
+            <div class="exp-meta">
+                <div>2025 - Present</div>
+                <div>Hong Kong</div>
+            </div>
+        </div>
+
+        <div class="exp-item">
+            <div class="exp-main">
+                <div style="font-weight: 700; font-size: 1.05rem;">Central South University</div>
+                <div style="color: var(--text-muted);">M.S. in Electronic Information</div>
+            </div>
+            <div class="exp-meta">
+                <div>2022 - 2025</div>
+                <div>Changsha</div>
+            </div>
+        </div>
+
+        <div class="exp-item">
+            <div class="exp-main">
+                <div style="font-weight: 700; font-size: 1.05rem;">Central South University</div>
+                <div style="color: var(--text-muted);">B.S. in Computer Science</div>
+            </div>
+            <div class="exp-meta">
+                <div>2018 - 2022</div>
+                <div>Changsha</div>
+            </div>
+        </div>
+      </section>
+
+      <!-- PUBLICATION -->
+      <section id="publication">
+        <h1><i class="fa-solid fa-book-bookmark"></i> Selected Publications</h1>
+        
+        <!-- Paper 1 -->
+        <div class="paper-box">
+            <div class="paper-img-container">
+                <div class="badge">WebConf 2025</div>
+                <img src="images/ED2.png" alt="Paper Teaser" class="paper-img">
+            </div>
+            <div class="paper-details">
+                <h3><a href="https://openreview.net/forum?id=GE71TxvTH3">Unleash LLMs Potential for Sequential Recommendation by Coordinating Dual Dynamic Index Mechanism</a></h3>
+                <div class="paper-authors">
+                    <strong>Jun Yin</strong>, Zhengxin Zeng, Mingzheng Li, Hao Yan, Chaozhuo Li, et al.
+                </div>
+                <div class="paper-venue">
+                    The Web Conference (WWW), 2025 <span class="tag-ccf">CCF-A</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 2 -->
+        <div class="paper-box">
+            <div class="paper-img-container">
+                <div class="badge">NeurIPS 2023</div>
+                <img src="images/PIGNN.png" alt="Paper Teaser" class="paper-img">
+            </div>
+            <div class="paper-details">
+                <h3><a href="https://nips.cc/Conferences/2023/Schedule?showEvent=70941">Train Once and Explain Everywhere: Pre-training Interpretable Graph Neural Networks</a></h3>
+                <div class="paper-authors">
+                    <strong>Jun Yin</strong>, Chaozhuo Li, Hao Yan, Jianxun Lian, Senzhang Wang.
+                </div>
+                <div class="paper-venue">
+                    NeurIPS 2023 <span class="tag-ccf">CCF-A</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 3 -->
+        <div class="paper-box">
+            <div class="paper-img-container">
+                <div class="badge">NeurIPS 2023</div>
+                <img src="images/VINFOR.png" alt="Paper Teaser" class="paper-img">
+            </div>
+            <div class="paper-details">
+                <h3><a href="https://nips.cc/Conferences/2023/Schedule?showEvent=72409">V-InFoR: A Robust Graph Neural Networks Explainer for Structurally Corrupted Graphs</a></h3>
+                <div class="paper-authors">
+                    Senzhang Wang, <strong>Jun Yin</strong>, Chaozhuo Li, Xing Xie, Jianxin Wang.
+                </div>
+                <div class="paper-venue">
+                     NeurIPS 2023 <span class="tag-ccf">CCF-A</span>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <h1><i class="fa-solid fa-laptop-code"></i> Experience</h1>
+        
+        <div class="exp-item">
+            <div class="exp-main">
+                <div style="font-weight: 700; font-size: 1.05rem;">Microsoft AI</div>
+                <div style="font-style: italic; font-size: 0.9rem;">Onsite Research Intern</div>
+            </div>
+            <div class="exp-meta">
+                <div>Oct 2023 - Feb 2025</div>
+                <div>Beijing</div>
+            </div>
+        </div>
+
+        <div class="exp-item">
+            <div class="exp-main">
+                <div style="font-weight: 700; font-size: 1.05rem;">Microsoft Research Asia (MSRA)</div>
+                <div style="font-style: italic; font-size: 0.9rem;">Research Intern</div>
+            </div>
+            <div class="exp-meta">
+                <div>Dec 2022 - Jun 2023</div>
+                <div>Remote</div>
+            </div>
+        </div>
+      </section>
+
+      <!-- AFTER RESEARCH (GALLERY) -->
+      <section id="after-research">
+        <h1><i class="fa-solid fa-mug-hot"></i> After Research</h1>
+        <p>Life is not just about papers. Here are some moments from my life.</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="images/team.jpg" alt="Team"><div class="gallery-caption">Lab Team</div></div>
+            <div class="gallery-item"><img src="images/szw.jpg" alt="szw"><div class="gallery-caption">Moment</div></div>
+            <div class="gallery-item"><img src="images/zhuhai.png" alt="Zhuhai"><div class="gallery-caption">Zhuhai</div></div>
+            <div class="gallery-item"><img src="images/we.jpg" alt="We"><div class="gallery-caption">Friends</div></div>
+            <div class="gallery-item"><img src="images/dali.jpg" alt="Dali"><div class="gallery-caption">Dali Trip</div></div>
+            <div class="gallery-item"><img src="images/beijing.jpg" alt="Beijing"><div class="gallery-caption">Beijing</div></div>
+            <div class="gallery-item"><img src="images/lovecsu.jpg" alt="CSU"><div class="gallery-caption">CSU Campus</div></div>
+            <div class="gallery-item"><img src="images/me.jpg" alt="Me"><div class="gallery-caption">Myself</div></div>
+        </div>
+      </section>
+      
+      <div style="margin-top: 60px; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 20px; padding-bottom: 20px;">
+          &copy; 2025 Jun Yin.
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    /* 1. Dark Mode Logic */
+    const toggleButton = document.getElementById('theme-toggle');
+    const icon = toggleButton.querySelector('i');
+    const body = document.body;
+
+    // Check Local Storage on Load
+    if (localStorage.getItem('nightMode') === 'enabled') {
+      body.classList.add('night-mode');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+
+    toggleButton.addEventListener('click', () => {
+      body.classList.toggle('night-mode');
+      
+      if (body.classList.contains('night-mode')) {
+        localStorage.setItem('nightMode', 'enabled');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        localStorage.setItem('nightMode', 'disabled');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+
+    /* 2. Active Navigation Link Highlight */
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            // Offset to trigger highlight slightly before section hits top
+            if (pageYOffset >= (sectionTop - 150)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+  </script>
+
+</body>
+</html>
