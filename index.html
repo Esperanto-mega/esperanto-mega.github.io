@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jun Yin - Homepage</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #0066cc;
+            --bg-color: #ffffff; /* 浅色模式背景 */
+            --sidebar-bg: rgba(248, 249, 250, 0.9); /* 侧边栏微透明 */
+            --text-color: #333;
+            --text-secondary: #666;
+            --border-color: #e9ecef;
+            --card-hover: #f1f3f5;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #e0e0e0;
+            --accent-color: #64b5f6;
+            --bg-color: #121212; /* 深色模式背景 */
+            --sidebar-bg: rgba(30, 30, 30, 0.9); /* 深色侧边栏微透明 */
+            --text-color: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --card-hover: #2d2d2d;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color); /* 关键：背景色由 Body 控制 */
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- Canvas Background (Layer 1: Middle) --- */
+        /* Body BG is Layer 0 */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* 在背景之上，内容之下 */
+            pointer-events: none; /* 鼠标穿透 */
+        }
+
+        a { color: var(--accent-color); text-decoration: none; transition: 0.2s; }
+        a:hover { text-decoration: underline; }
+
+        /* --- Layout (Layer 2: Top) --- */
+        .wrapper {
+            display: flex;
+            max-width: 1500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1; /* 确保内容在 Canvas 之上，可点击 */
+        }
+
+        /* Sidebar (Profile) */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            padding: 40px 30px;
+            border-right: 1px solid var(--border-color);
+            text-align: center;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            backdrop-filter: blur(8px); /* 毛玻璃效果 */
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid var(--bg-color);
+            box-shadow: var(--shadow);
+        }
+
+        .name { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; color: var(--primary-color); }
+        .bio { font-size: 1rem; color: var(--text-secondary); margin-bottom: 20px; }
+        
+        .contact-info { text-align: left; font-size: 0.95rem; margin-top: 20px; }
+        .contact-item { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; color: var(--text-secondary); }
+        .contact-item i { width: 20px; text-align: center; color: var(--accent-color); }
+
+        .social-links { margin-top: 25px; display: flex; justify-content: center; gap: 15px; }
+        .social-links a { color: var(--text-secondary); font-size: 1.3rem; }
+        .social-links a:hover { color: var(--accent-color); transform: translateY(-2px); }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            max-width: none;
+        }
+
+        section { margin-bottom: 50px; }
+        
+        h1, h2 { 
+            color: var(--primary-color); 
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h1 { font-size: 2.2rem; border: none; padding-bottom: 0; }
+        h2 { font-size: 1.6rem; margin-top: 40px; }
+
+        p { margin-bottom: 1rem; text-align: justify; font-size: 1.05rem; }
+        
+        ul.interests-list { list-style-type: square; padding-left: 20px; color: var(--text-color); font-size: 1.05rem; }
+        ul.interests-list li { margin-bottom: 10px; }
+
+        /* Timeline / Lists */
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--border-color);
+            padding-left: 25px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+        .timeline-date {
+            min-width: 160px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        .timeline-content { flex: 1; font-size: 1.05rem; }
+
+        /* Publications */
+        .paper-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: var(--bg-color); /* 保证文字可读性，遮挡下方粒子 */
+            border: 1px solid var(--border-color); /* 增加边框更清晰 */
+        }
+        .paper-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-color);
+        }
+        .paper-img {
+            width: 200px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            background: #f0f0f0;
+            position: relative; /* 【修复】标签飞出的关键：相对定位 */
+        }
+        .paper-img img { width: 100%; height: auto; display: block; }
+        
+        .paper-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .paper-title { font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; color: var(--primary-color); }
+        .paper-authors { font-size: 1rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
+        .paper-venue { font-style: italic; font-size: 0.95rem; color: var(--accent-color); }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 4px;
+            color: #fff;
+            background-color: var(--accent-color);
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .badge-red { background-color: #e74c3c; } 
+        .badge-blue { background-color: #3498db; } 
+
+        /* Service List Box */
+        .scroll-list {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 15px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--bg-color); /* 保证可读性 */
+        }
+        .list-item {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+        .list-item:last-child { border-bottom: none; }
+        .list-date {
+            font-weight: bold;
+            min-width: 100px;
+            color: var(--accent-color);
+        }
+
+        /* Gallery Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .gallery img:hover { transform: scale(1.05); }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .wrapper { flex-direction: column; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; 
+                padding: 30px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content { padding: 30px 20px; }
+            .paper-item { flex-direction: column; }
+            .paper-img { width: 100%; height: auto; margin-bottom: 15px; }
+            .paper-img img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="wrapper">
+        <aside class="sidebar">
+            <img src="images/junyin.jpg" alt="Jun Yin" class="avatar">
+            <div class="name">Jun YIN (殷珺)</div>
+            <div class="bio">PhD Student<br>The Hong Kong Polytechnic University</div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-fw fa-map-marker-alt"></i> Jiangsu, China
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-fw fa-envelope"></i> 
+                    <a href="mailto:Junmay.yin@connect.polyu.hk" style="color: inherit; text-decoration: none;">Junmay.yin@connect.polyu.hk</a>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="mailto:Junmay.yin@connect.polyu.hk" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: left; font-size: 0.95rem;">
+                <p><strong>Navigation:</strong></p>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="#about-me">About Me</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#publication">Publication</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#service">Services</a></li>
+                    <li><a href="#honor-and-award">Honors</a></li>
+                    <li><a href="#after-research">Gallery</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section id="about-me">
+                <h1>About Me</h1>
+                <p>
+                    My name is Jun YIN. Currently, I am a PhD Student in the Department of Data Science and Artificial Intelligence at The Hong Kong Polytechnic University under the supervision of Professor <a href="https://chengqi-zhang.github.io">Chengqi ZHANG</a> and Professor <a href="https://shiruipan.github.io">Shirui PAN</a>. 
+                </p>
+                <p>
+                    I received my Master degree in Electronic Information and Bachelor degree in Computer Science from Central South University in 2025 and 2022, respectively. From September 2021 to June 2025, I studied in BigData 4 Urban Intelligence Lab lead by Professor <a href="https://senzhangwangcsu.github.io/index.html">Senzhang WANG</a>. From October 2023 to February 2025, I worked as Onsite Research Intern at Microsoft AI supervised by Professor <a href="https://whatsname1991.github.io/">Chaozhuo LI</a>, focusing on LLM-based generative recommendation.
+                </p>
+                <p><strong>My main research interests lie in:</strong></p>
+                <ul class="interests-list">
+                    <li>Generative Recommender Systems, Large Language Models</li>
+                    <li>Relational Deep Learning, Tabular Machine Learning</li>
+                    <li>Graph Neural Networks, GNN Explanation Methods, Interpretable GNNs</li>
+                </ul>
+            </section>
+
+            <section id="education">
+                <h2>📖 Education</h2>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025.09 - Present</div>
+                    <div class="timeline-content">
+                        <strong>PhD Student in Machine Learning</strong><br>
+                        The Hong Kong Polytechnic University, Hong Kong SAR, China.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022.09 - 2025.06</div>
+                    <div class="timeline-content">
+                        <strong>Master Student in Electronic Information</strong><br>
+                        Central South University, Changsha, Hunan Province, China.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2018.09 - 2022.06</div>
+                    <div class="timeline-content">
+                        <strong>Bachelor Student in Computer Science</strong><br>
+                        Central South University, Changsha, Hunan Province, China.
+                    </div>
+                </div>
+            </section>
+
+            <section id="publication">
+                <h2>📝 Publication</h2>
+                
+                <div class="paper-item">
+                    <div class="paper-img">
+                        <div style="position: absolute; top: 10px; left: 10px;">
+                            <span class="badge badge-red">ICLR 2026</span>
+                        </div>
+                        <img src="images/IDEA.png" alt="Paper Image">
+                    </div>
+                    <div class="paper-info">
+                        <a href="https://openreview.net/forum?id=X7eYISNf01&referrer=%5BAuthor%20Console%5D(%2Fgroup%3Fid%3DICLR.cc%2F2026%2FConference%2FAuthors%23your-submissions)" class="paper-title">
+                            Paradigm Shift of GNN Explainer from Label Space to Prototypical Representation Space <span class="badge badge-red">[CORE-A*]</span>
+                        </a>
+                        <div class="paper-authors">
+                            <b><font color="#0066cc">Jun Yin</font></b>, Senzhang Wang, Ziluowen Luo, Peng Huo, <a href="https://sktsherlock.github.io/">Hao Yan</a>, Hao Miao, Chaozhuo Li, Shirui Pan, Chengqi Zhang.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paper-item">
+                    <div class="paper-img">
+                        <div style="position: absolute; top: 10px; left: 10px;">
+                            <span class="badge badge-red">WebConf 2025</span>
+                        </div>
+                        <img src="images/ED2.png" alt="Paper Image">
+                    </div>
+                    <div class="paper-info">
+                        <a href="https://dl.acm.org/doi/abs/10.1145/3696410.3714866" class="paper-title">
+                            Unleash LLMs Potential for Sequential Recommendation by Coordinating Dual Dynamic Index Mechanism <span class="badge badge-red">[CCF-A]</span>
+                        </a>
+                        <div class="paper-authors">
+                            <b><font color="#0066cc">Jun Yin</font></b>, Zhengxin Zeng, Mingzheng Li, Hao Yan, Chaozhuo Li, Weihao Han, Jianjin Zhang, Ruochen Liu, Hao Sun, Weiwei Deng, Feng Sun, Qi Zhang, Shirui Pan, Senzhang Wang.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paper-item">
+                    <div class="paper-img">
+                        <div style="position: absolute; top: 10px; left: 10px;">
+                            <span class="badge badge-red">NeurIPS 2023</span>
+                        </div>
+                        <img src="images/PIGNN.png" alt="Paper Image">
+                    </div>
+                    <div class="paper-info">
+                        <a href="https://nips.cc/Conferences/2023/Schedule?showEvent=70941" class="paper-title">
+                            Train Once and Explain Everywhere: Pre-training Interpretable Graph Neural Networks <span class="badge badge-red">[CCF-A]</span>
+                        </a>
+                        <div class="paper-authors">
+                            <b><font color="#0066cc">Jun Yin</font></b>, Chaozhuo Li, Hao Yan, Jianxun Lian, Senzhang Wang.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paper-item">
+                    <div class="paper-img">
+                        <div style="position: absolute; top: 10px; left: 10px;">
+                            <span class="badge badge-red">NeurIPS 2023</span>
+                        </div>
+                        <img src="images/VINFOR.png" alt="Paper Image">
+                    </div>
+                    <div class="paper-info">
+                        <a href="https://nips.cc/Conferences/2023/Schedule?showEvent=72409" class="paper-title">
+                            V-InFoR: A Robust Graph Neural Networks Explainer for Structurally Corrupted Graphs <span class="badge badge-red">[CCF-A]</span>
+                        </a>
+                        <div class="paper-authors">
+                            Senzhang Wang, <strong><font color="#0066cc">Jun Yin</font></strong>, Chaozhuo Li, Xing Xie, Jianxin Wang.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Other Publications</h3>
+                <ul class="interests-list">
+                    <li>
+                        <span class="badge badge-red">KDD 2025</span> 
+                        <a href="https://dl.acm.org/doi/10.1145/3711896.3737404">When Graph meets Multimodal: Benchmarking and Meditating on Multimodal Attributed Graphs Learning.</a><br>
+                        Hao Yan, Chaozhuo Li, <strong><font color="#0066cc">Jun Yin</font></strong>, Zhigang Yu, Weihao Han, Mingzheng Li, Zhengxin Zeng, Hao Sun, Senzhang Wang. <b><font color="red">[CCF-A]</font></b>
+                    </li>
+                    <li>
+                        <span class="badge badge-blue">TKDD 2025</span> 
+                        <a href="https://dl.acm.org/doi/10.1145/3728646">Have Our Cake and Eat It: Augmentation Diversity and Semantic Consistency Balanced Graph Contrastive Learning.</a><br>
+                        Hao Yan, Senzhang Wang, Chaozhuo Li, <strong><font color="#0066cc">Jun Yin</font></strong>, Philp S. Yu, Jianxin Wang. <b><font color="red">[CCF-B]</font></b>
+                    </li>
+                    <li>
+                        <span class="badge badge-blue">WSDM 2025</span> 
+                        <a href="https://dl.acm.org/doi/10.1145/3701551.3703571">MoKGNN: Boosting Graph Neural Networks via Mixture of Generic and Task-Specific Language Models.</a><br>
+                        Hao Yan, Chaozhuo Li, <strong><font color="#0066cc">Jun Yin</font></strong>, Weihao Han, Hao Sun, Senzhang Wang. <b><font color="red">[CCF-B]</font></b>
+                    </li>
+                    <li>
+                        <span class="badge badge-red">NeurIPS 2023</span> 
+                        <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/37d00f567a18b478065f1a91b95622a0-Abstract-Datasets_and_Benchmarks.html">A Comprehensive Study on Text-Attributed Graphs: Benchmarking and Rethinking.</a><br>
+                        Hao Yan, Chaozhuo Li, Ruosong Long, Chao Yan, Jianan Zhao, Wenwen Zhuang, <strong><font color="#0066cc">Jun Yin</font></strong>, Peiyan Zhang, Weihao Han, Hao Sun, Weiwei Deng, Qi Zhang, Lichao Sun, Xing Xie, Senzhang Wang. <b><font color="red">[CCF-A]</font></b>
+                    </li>
+                    <li>
+                        <span class="badge badge-blue">ECML/PKDD 2023</span> 
+                        <a href="https://link.springer.com/chapter/10.1007/978-3-031-43415-0_41">Hierarchical Graph Contrastive Learning.</a><br>
+                        Hao Yan, Senzhang Wang, <strong><font color="#0066cc">Jun Yin</font></strong>, Chaozhuo Li, Junxing Zhu, Jianxin Wang. <b><font color="red">[CCF-B]</font></b>
+                    </li>
+                    <li>
+                        <span class="badge badge-blue">SDM 2023</span> 
+                        <a href="https://epubs.siam.org/doi/epdf/10.1137/1.9781611977653.ch19">Adversarial Hard Negative Generation for Complementary Graph Contrastive Learning.</a><br>
+                        Senzhang Wang, Hao Yan, Jinlong Du, <strong><font color="#0066cc">Jun Yin</font></strong>, Junxing Zhu, Chaozhuo Li, Jianxin Wang. <b><font color="red">[CCF-B]</font></b>
+                    </li>
+                </ul>
+
+            </section>
+
+            <section id="experience">
+                <h2>💻 Experience</h2>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023.10 - 2025.02</div>
+                    <div class="timeline-content">
+                        <strong>Onsite Research Internship</strong>, Microsoft AI, Beijing.
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022.12 - 2023.06</div>
+                    <div class="timeline-content">
+                        <strong>Remote Research Internship</strong>, Microsoft Research Asia, Beijing.
+                    </div>
+                </div>
+            </section>
+
+            <section id="service">
+                <h2>⚖️ Services</h2>
+                <div class="scroll-list">
+                    <div class="list-item"><span class="list-date">2026.01</span><span>😼 Serve as the reviewer of International Conference on Machine Learning (ICML) 2026</span></div>
+                    <div class="list-item"><span class="list-date">2025.12</span><span>😼 Serve as the reviewer of Neural Networks</span></div>
+                    <div class="list-item"><span class="list-date">2025.12</span><span>😼 Serve as the reviewer of Neurocomputing</span></div>
+                    <div class="list-item"><span class="list-date">2025.12</span><span>😼 Serve as the reviewer of ACM Transactions on Intelligent Systems and Technology (TIST)</span></div>
+                    <div class="list-item"><span class="list-date">2025.09</span><span>😼 Serve as the reviewer of Machine Learning with Applications (MLWP)</span></div>
+                    <div class="list-item"><span class="list-date">2025.09</span><span>😼 Serve as the reviewer of International Conference on Learning Representations (ICLR) 2026</span></div>
+                    <div class="list-item"><span class="list-date">2025.03</span><span>😼 Serve as the reviewer of Annual AAAI Conference on Artificial Intelligence (AAAI) 2026</span></div>
+                    <div class="list-item"><span class="list-date">2025.03</span><span>😼 Serve as the reviewer of Annual Conference on Neural Information Processing Systems (NeurIPS) 2025</span></div>
+                    <div class="list-item"><span class="list-date">2025.03</span><span>😼 Serve as the reviewer of SIGKDD Conference on Knowledge Discovery and Data Mining (KDD) 2025</span></div>
+                    <div class="list-item"><span class="list-date">2025.01</span><span>😼 Serve as the reviewer of IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</span></div>
+                    <div class="list-item"><span class="list-date">2024.08</span><span>😼 Serve as the reviewer of International World Wide Web Conference (The WebConf) 2025</span></div>
+                    <div class="list-item"><span class="list-date">2024.08</span><span>😼 Serve as the reviewer of International Conference on Learning Representations (ICLR) 2025</span></div>
+                    <div class="list-item"><span class="list-date">2024.04</span><span>😼 Serve as the reviewer of ACM International Conference on Multimedia (ACM MM) 2024</span></div>
+                </div>
+            </section>
+
+            <section id="honor-and-award">
+                <h2>🎖 Honor and Award</h2>
+                <ul class="interests-list">
+                    <li><strong>2025.03.</strong> Excellent Master's Graduate of General Higher Education Institutions in Hunan Province</li>
+                    <li><strong>2025.02.</strong> Outstanding Master's Graduate of Central South University</li>
+                    <li><strong>2024.10.</strong> National Scholarship of Central South University</li>
+                    <li><strong>2024.10.</strong> Outstanding Student of Central South University</li>
+                    <li><strong>2024.10.</strong> First Academic Scholarship of Central South University</li>
+                    <li><strong>2024.10.</strong> Goodix Scholarship of Central South University</li>
+                    <li><strong>2021.08.</strong> Third Prize in Hunan Province Aritificial Interlligence Challenge</li>
+                </ul>
+            </section>
+
+            <section id="after-research">
+                <h2>☁️ After Research</h2>
+                <div class="gallery">
+                    <img src="images/team.jpg" alt="team"/>
+                    <img src="images/szw.jpg" alt="szw"/>
+                    <img src="images/zhuhai.png" alt="zhuhai"/>
+                    <img src="images/we.jpg" alt="we"/>
+                    <img src="images/sz_2.jpg" alt="sz_2"/>
+                    <img src="images/dali.jpg" alt="dali"/>
+                    <img src="images/beijing.jpg" alt="beijing"/>
+                    <img src="images/lovecsu.jpg" alt="csu"/>
+                    <img src="images/me.jpg" alt="me"/>
+                </div>
+            </section>
+
+            <section id="visitor">
+                <h2>👀 Visitor</h2>
+                <div style="text-align: center; margin-top: 20px;">
+                    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=ycpnC2lkDUYN9S-P8SOee7SyXVtP7VHv-wb8_SE8G58&cl=ffffff&w=a"></script>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <button id="theme-toggle" aria-label="Toggle Night Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const icon = toggleButton.querySelector('i');
+        const body = document.body;
+        const mapScript = document.getElementById('clustrmaps');
+
+        // Check Local Storage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            if(mapScript) mapScript.style.opacity = "0.8"; 
+        }
+
+        // --- Theme Toggle Logic ---
+        toggleButton.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            // Update Canvas Color immediately
+            initParticles();
+        });
+
+        // --- Simple Particle Network Animation ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        // Resize Canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // Mouse Interaction
+        const mouse = { x: null, y: null, radius: 150 };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Particle Class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                // Border Check
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+
+                // Mouse Interaction (Push)
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius + this.size) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 1;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 1;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 1;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 1;
+                }
+
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Init Particles
+        function initParticles() {
+            particlesArray = [];
+            // Calculate number of particles based on screen size
+            let numberOfParticles = (canvas.height * canvas.width) / 15000;
+            
+            // Determine Color based on Theme
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            // Dark Mode particles are white (transparent), Light Mode particles are dark blue
+            const pColor = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(44, 62, 80, 0.4)';
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.5) - 0.25;
+                let directionY = (Math.random() * 0.5) - 0.25;
+                
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, pColor));
+            }
+        }
+
+        // Connect Particles with lines
+        function connect() {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            // Line color matches theme
+            const lineColor = isDark ? 'rgba(255,255,255,' : 'rgba(44, 62, 80,';
+
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        let opacityValue = 1 - (distance/10000);
+                        ctx.strokeStyle = lineColor + opacityValue + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Start
+        initParticles();
+        animate();
+
+    </script>
+</body>
+</html>
